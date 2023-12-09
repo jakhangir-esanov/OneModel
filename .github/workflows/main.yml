@@ -69,7 +69,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: SSH into AWS Ubuntu Server
+      - name: SSH into AWS Ubuntu Serve
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.HOST }}
