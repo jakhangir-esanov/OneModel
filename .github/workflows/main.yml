@@ -57,8 +57,8 @@ jobs:
       - name: Setup .NET 7
         uses: actions/setup-dotnet@v3
       - name: Build Docker image
-        run: docker build -t $USERNAME/myonemodel -f OneModel.Api/Dockerfile .
+        run: docker build -t $DOCKER_USERNAME/myonemodel -f OneModel.Api/Dockerfile .
       - name: Login to Docker account
-        run: docker login -u $USERNAME -p $PASSWORD #--password-stdin
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD #--password-stdin
       - name: Push Docker image
-        run: docker image push $USERNAME/myonemodel
+        run: docker image push $DOCKER_USERNAME/myonemodel
