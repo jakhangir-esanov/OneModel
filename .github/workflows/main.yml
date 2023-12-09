@@ -19,10 +19,29 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 7.0.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+
+  dockerize:
+    name: Dockerize
+    runs-on: ubuntu-latest
+    env:
+      USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup .NET 7
+        uses: actions/setup-dotnet@v3
+      - name: Build Docker image
+        run: docker build -t $USERNAME/myonemodel -f OneModel.Api/Dockerfile .
+      - name: Login to Docker account
+        run: docker login -u $USERNAME -p $PASSWORD #--password-stdin
+      - name: Push Docker image
+        run: docker image push $USERNAME/myonemodel
